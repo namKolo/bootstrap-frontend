@@ -1,7 +1,7 @@
 import { Reducer } from 'redux';
 import { SampleReducerState, SampleReducerAction, SampleReducerActionTypes } from './types';
 
-const initialState: SampleReducerState = {
+export const initialState: SampleReducerState = {
   loading: false,
   loaded: false,
   data: [],
