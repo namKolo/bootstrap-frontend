@@ -21,7 +21,7 @@ const SamplePage = () => {
       {result.loaded && (
         <div>
           {result.data.map(user => (
-            <User user={user} />
+            <User user={user} key={user.id} />
           ))}
         </div>
       )}
