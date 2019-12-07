@@ -2,8 +2,10 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // store
-import { fetchGithubUsers, GithubUser } from 'store/sampleReducer';
+import { fetchGithubUsers } from 'store/sampleReducer';
 import { IApplicationState } from 'store';
+
+import UserList from './UserList';
 
 const SamplePage = () => {
   const dispatch = useDispatch();
@@ -18,22 +20,9 @@ const SamplePage = () => {
   return (
     <div>
       {result.loading && <div>Loading...</div>}
-      {result.loaded && (
-        <div>
-          {result.data.map(user => (
-            <User user={user} key={user.id} />
-          ))}
-        </div>
-      )}
+      {result.loaded && <UserList users={result.data} />}
     </div>
   );
 };
 
 export default SamplePage;
-
-interface UserProps {
-  user: GithubUser;
-}
-const User: React.FC<UserProps> = ({ user }) => {
-  return <div>{user.login}</div>;
-};

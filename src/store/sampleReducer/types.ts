@@ -1,9 +1,9 @@
 // Response object for GET /users
-export interface GithubUser {
+export type GithubUser = {
   login: string;
   id: number;
   url: string;
-}
+};
 
 // enum is better
 export enum SampleReducerActionTypes {
@@ -12,19 +12,19 @@ export enum SampleReducerActionTypes {
   FETCH_ERROR = '@@githubUser/FETCH_ERROR'
 }
 
-interface FetchGithubUserRequest {
+type FetchGithubUserRequest = {
   type: SampleReducerActionTypes.FETCH_REQUEST;
-}
+};
 
-interface FetchGithubUserSuccess {
+type FetchGithubUserSuccess = {
   type: SampleReducerActionTypes.FETCH_SUCCESS;
   users: GithubUser[];
-}
+};
 
-interface FetchGithubUserError {
+type FetchGithubUserError = {
   type: SampleReducerActionTypes.FETCH_ERROR;
   error: string;
-}
+};
 
 export type SampleReducerAction =
   | FetchGithubUserRequest
