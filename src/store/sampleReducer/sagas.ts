@@ -4,29 +4,28 @@ import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import api from 'utils/api';
 
 // local
-import { SampleReducerActionTypes } from './types';
-import { fetchGithubUsersError, fetchGithubUsersSuccess } from './actions';
+import { getGithubUsersAction } from './actions';
 
 function* handleFetch() {
   try {
     const res = yield call(api, 'get', 'users');
 
     if (res.error) {
-      yield put(fetchGithubUsersError(res.error));
+      yield put(getGithubUsersAction.failure(res.error));
     } else {
-      yield put(fetchGithubUsersSuccess(res));
+      yield put(getGithubUsersAction.success(res));
     }
   } catch (err) {
     if (err instanceof Error && err.stack) {
-      yield put(fetchGithubUsersError(err.stack));
+      yield put(getGithubUsersAction.failure(err.stack));
     } else {
-      yield put(fetchGithubUsersError('An unknown error occurred.'));
+      yield put(getGithubUsersAction.failure('An unknown error occurred.'));
     }
   }
 }
 
 function* watchFetchRequest() {
-  yield takeEvery(SampleReducerActionTypes.FETCH_REQUEST, handleFetch);
+  yield takeEvery(getGithubUsersAction.request, handleFetch);
 }
 
 function* sampleSaga() {

@@ -1,15 +1,11 @@
-import { SampleReducerActionTypes, GithubUser, SampleReducerAction } from './types';
+import { createAsyncAction, ActionType } from 'typesafe-actions';
 
-export const fetchGithubUsers = (): SampleReducerAction => ({
-  type: SampleReducerActionTypes.FETCH_REQUEST
-});
+import { GithubUser } from 'types';
 
-export const fetchGithubUsersSuccess = (users: GithubUser[]): SampleReducerAction => ({
-  type: SampleReducerActionTypes.FETCH_SUCCESS,
-  users
-});
+export const getGithubUsersAction = createAsyncAction(
+  '@githubUser/FETCH_ALL',
+  '@githubUser/FETCH_SUCCESS',
+  '@githubUser/FETCH_ERROR'
+)<undefined, GithubUser[], string>();
 
-export const fetchGithubUsersError = (error: string): SampleReducerAction => ({
-  type: SampleReducerActionTypes.FETCH_ERROR,
-  error
-});
+export type SampleActionTypes = ActionType<typeof getGithubUsersAction>;

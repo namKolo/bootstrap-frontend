@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // store
-import { fetchGithubUsers } from 'store/sampleReducer';
+import { getGithubUsersAction } from 'store/sampleReducer';
 import { IApplicationState } from 'store';
 
 import UserList from './UserList';
@@ -13,7 +13,7 @@ const SamplePage = () => {
 
   useEffect(() => {
     if (!result.loaded && !result.loading) {
-      dispatch(fetchGithubUsers());
+      dispatch(getGithubUsersAction.request());
     }
   }, [result, dispatch]);
 

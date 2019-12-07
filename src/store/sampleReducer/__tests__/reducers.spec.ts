@@ -1,10 +1,11 @@
+import { GithubUser } from 'types';
+
 import { initialState, sampleReducer } from '../reducers';
-import { fetchGithubUsers, fetchGithubUsersSuccess, fetchGithubUsersError } from '../actions';
-import { GithubUser } from '../types';
+import { getGithubUsersAction } from '../actions';
 
 describe('SampleReducer', () => {
   it('Should handle fetching github users', () => {
-    expect(sampleReducer(initialState, fetchGithubUsers())).toEqual({
+    expect(sampleReducer(initialState, getGithubUsersAction.request())).toEqual({
       ...initialState,
       loading: true
     });
@@ -12,7 +13,7 @@ describe('SampleReducer', () => {
 
   it('Should handle all data successfully fetch users', () => {
     const fakeGithubUsers: GithubUser[] = [{ login: 'login name', id: 1, url: 'url' }];
-    expect(sampleReducer(initialState, fetchGithubUsersSuccess(fakeGithubUsers))).toEqual({
+    expect(sampleReducer(initialState, getGithubUsersAction.success(fakeGithubUsers))).toEqual({
       ...initialState,
       loaded: true,
       data: fakeGithubUsers
@@ -20,7 +21,7 @@ describe('SampleReducer', () => {
   });
 
   it('Should handle error', () => {
-    expect(sampleReducer(initialState, fetchGithubUsersError('Error'))).toEqual({
+    expect(sampleReducer(initialState, getGithubUsersAction.failure('Error'))).toEqual({
       ...initialState,
       errors: 'Error'
     });

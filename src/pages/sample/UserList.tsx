@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { GithubUser } from 'store/sampleReducer';
+// app types
+import { GithubUser } from 'types';
 
 type Props = {
   users: GithubUser[];

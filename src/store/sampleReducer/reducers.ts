@@ -1,5 +1,17 @@
-import { Reducer } from 'redux';
-import { SampleReducerState, SampleReducerAction, SampleReducerActionTypes } from './types';
+import { createReducer } from 'typesafe-actions';
+
+// app types
+import { GithubUser } from 'types';
+
+// actions
+import { getGithubUsersAction, SampleActionTypes } from './actions';
+
+export interface SampleReducerState {
+  readonly loading: boolean;
+  readonly loaded: boolean;
+  readonly data: GithubUser[];
+  readonly errors?: string;
+}
 
 export const initialState: SampleReducerState = {
   loading: false,
@@ -8,39 +20,22 @@ export const initialState: SampleReducerState = {
   errors: ''
 };
 
-const sampleReducer: Reducer<SampleReducerState, SampleReducerAction> = (
-  state = initialState,
-  action
-) => {
-  switch (action.type) {
-    case SampleReducerActionTypes.FETCH_REQUEST: {
-      return {
-        ...state,
-        loading: true
-      };
-    }
-
-    case SampleReducerActionTypes.FETCH_SUCCESS: {
-      return {
-        loading: false,
-        loaded: true,
-        data: action.users,
-        errors: ''
-      };
-    }
-
-    case SampleReducerActionTypes.FETCH_ERROR: {
-      return {
-        loading: false,
-        loaded: false,
-        data: [],
-        errors: action.error
-      };
-    }
-
-    default:
-      return state;
-  }
-};
+const sampleReducer = createReducer<SampleReducerState, SampleActionTypes>(initialState)
+  .handleAction(getGithubUsersAction.request, state => ({
+    ...state,
+    loading: true
+  }))
+  .handleAction(getGithubUsersAction.success, (state, action) => ({
+    data: action.payload,
+    errors: '',
+    loaded: true,
+    loading: false
+  }))
+  .handleAction(getGithubUsersAction.failure, (state, action) => ({
+    loading: false,
+    loaded: false,
+    data: [],
+    errors: action.payload
+  }));
 
 export { sampleReducer };
