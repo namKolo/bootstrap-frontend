@@ -21,6 +21,14 @@ module.exports = async ({ config, mode }) => {
     '/Users/admin/Documents/AR/connect/frontend/react.revolution-v2/node_modules/'
   ]);
 
+  config.resolve.alias = {
+    'babel-runtime/core-js/object/assign':
+      '/Users/admin/Documents/side-project/snippet-sharing/frontend/node_modules/core-js/es/object/assign.js',
+    react: '/Users/admin/Documents/AR/connect/frontend/react.revolution-v2/node_modules/react',
+    'react-dom':
+      '/Users/admin/Documents/AR/connect/frontend/react.revolution-v2/node_modules/react-dom'
+  };
+
   // Return the altered config
   return config;
 };
